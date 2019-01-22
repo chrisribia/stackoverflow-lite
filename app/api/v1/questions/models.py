@@ -36,4 +36,8 @@ class QuestionModel():
             if question['id'] == question_id:
                 return question
 
-        return "red flag does not exit"
+        return "question does not exist"
+
+    def delete(self, incident):
+        self.db.remove(incident)
+        return "deleted"
