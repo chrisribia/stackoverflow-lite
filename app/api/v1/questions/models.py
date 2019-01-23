@@ -38,6 +38,19 @@ class QuestionModel():
 
         return "question does not exist"
 
-    def delete(self, incident):
-        self.db.remove(incident)
+    def delete(self, question):
+        self.db.remove(question)
         return "deleted"
+
+    def edit_question(self, question):
+        "Method to edit a question"
+        question['question'] = request.json.get('question')
+        return "updated"
+    def edit_question_title(self, question):
+        "Method to edit a questions title"
+        question['title'] = request.json.get('title')
+        return "updated"
+    def edit_quest(self, question):
+        "Method to edit a question"
+        question['question'] = request.json.get('question')
+        return "updated"
