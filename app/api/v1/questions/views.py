@@ -39,15 +39,84 @@ class Quests(Resource):
 
     def get(self, question_id):
 
-        """docstring for getting a specific red-flag"""
+        """docstring for getting a specific question"""
         specificQuest = self.db.find(question_id)
-        if specificQuest == "red flag does not exit":
+        if specificQuest == "question does not exist":
                return make_response(jsonify({
                     "status": 404,
-                    "error": "question does not exit"
+                    "error": "question does not exist"
                 }), 404)
        
         return make_response(jsonify({
             "status": 200,
             "data": specificQuest
         }), 200)
+
+    def delete(self, question_id):
+        """docstring for deleting a question"""
+        incident = self.db.find(question_id)
+        if incident == "question does not exist":
+            return make_response(jsonify({
+                "status": 404,
+                "error": "question does not exist"
+            }), 404)
+        delete_status = self.db.delete(incident)
+        if delete_status == "deleted":
+            return make_response(jsonify({
+                "status": 200,
+                "data": 'question  has been deleted'
+        }), 200)
+
+
+
+        
+
+class UpdateTitle(Resource):
+    """class to update question title"""
+
+    def __init__(self):
+        self.db = QuestionModel()
+
+    def patch(self, question_id):
+        """method to update question's title"""
+        question = self.db.find(question_id)
+
+        if question == "question does not exist":
+            return  make_response(jsonify({
+                "status": 404,
+                "error": "question does not exist"
+            }), 404)
+        edit_status = self.db.edit_question_title(question)
+        if edit_status == "updated":
+            return jsonify({
+                "status": 200,
+                "data": {
+                    "id": question_id,
+                    "message": "Updated question's title"
+                }
+               })
+
+class UpdateQuestion(Resource):
+    """class to update question title"""
+
+    def __init__(self):
+        self.db = QuestionModel()
+
+    def patch(self, question_id):
+        """method to update question"""
+        question = self.db.find(question_id)
+
+        if question == "question does not exist":
+            return  make_response(jsonify({
+                "status": 404,
+                "error": "question does not exist"
+            }), 404)
+        edit_status = self.db.edit_quest(question)
+        if edit_status == "updated":
+            return jsonify({
+                "status": 200,
+                "data": {
+                    "id": question_id,
+                    "message": "Updated question"
+                }
+               })
