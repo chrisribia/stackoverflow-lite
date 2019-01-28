@@ -6,7 +6,7 @@ class Config:
     """
     Base configuration class.
     """
-    DEBUG = False
+    DEBUG = False # Turns on debugging features in Flask
     TESTING = False
     
 class DevelopmentConfig(Config):
@@ -37,3 +37,7 @@ APP_CONFIG = {
     'production': ProductionConfig,
     'default': TestingConfig,
 }
+"""When your app is initialized, the variables
+ in config.py are used to configure Flask and 
+ its extensions are accessible via the
+  app.config dictionary – e.g. app.config["DEBUG"]"""

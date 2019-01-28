@@ -12,11 +12,12 @@ class QuestionModel():
 
     def __init__(self):
         self.db = questions
-        if len(questions) == 0:
+        if len(self.db)  == 0:
             self.id = 1
-        else:
-            self.id = questions[-1]['id'] + 1
-        self.id = len(questions) + 1
+        else: 
+            self.id = len(self.db)+1
+
+        
 
     def save(self):
         parser.parse_args()        
