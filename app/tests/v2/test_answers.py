@@ -89,6 +89,7 @@ class QuestionsTestCase(unittest.TestCase):
         result = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result['status'], 200)
+        
     def test_accept_answer(self):
         """Test get all single"""
         self.app.post("/api/v2/answers/1/user_preferred", headers=self.headers,
