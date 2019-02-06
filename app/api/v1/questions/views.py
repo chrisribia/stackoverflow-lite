@@ -3,12 +3,22 @@ from flask_restful import Resource
 
 from .models import QuestionModel
 
+def non_existance():
+     return jsonify({
+                    "status": 404,
+                    "error": "question does not exist"
+                })
+
+
+
+
 class Quest(Resource):
     """docstring for Quest class"""
 
     def __init__(self):
         """initiliase the Quest class"""
         self.db = QuestionModel()
+
 
     def post(self):
         """docstring for saving a Quest"""
@@ -42,10 +52,7 @@ class Quests(Resource):
         """docstring for getting a specific question"""
         specificQuest = self.db.find(question_id)
         if specificQuest == "question does not exist":
-               return make_response(jsonify({
-                    "status": 404,
-                    "error": "question does not exist"
-                }), 404)
+               return non_existance()
        
         return make_response(jsonify({
             "status": 200,
@@ -56,10 +63,7 @@ class Quests(Resource):
         """docstring for deleting a question"""
         incident = self.db.find(question_id)
         if incident == "question does not exist":
-            return make_response(jsonify({
-                "status": 404,
-                "error": "question does not exist"
-            }), 404)
+            return non_existance()
         delete_status = self.db.delete(incident)
         if delete_status == "deleted":
             return make_response(jsonify({
@@ -82,10 +86,7 @@ class UpdateTitle(Resource):
         question = self.db.find(question_id)
 
         if question == "question does not exist":
-            return  make_response(jsonify({
-                "status": 404,
-                "error": "question does not exist"
-            }), 404)
+            return  non_existance()
         edit_status = self.db.edit_question_title(question)
         if edit_status == "updated":
             return jsonify({
@@ -107,16 +108,13 @@ class UpdateQuestion(Resource):
         question = self.db.find(question_id)
 
         if question == "question does not exist":
-            return  make_response(jsonify({
-                "status": 404,
-                "error": "question does not exist"
-            }), 404)
+            return  non_existance()
         edit_status = self.db.edit_quest(question)
         if edit_status == "updated":
             return jsonify({
                 "status": 200,
                 "data": {
                     "id": question_id,
-                    "message": "Updated question"
+                    "message": "updated"
                 }
                })
