@@ -49,6 +49,7 @@ class QuestionModel():
         "Method to edit a question"
         question['question'] = request.json.get('question')
         return "updated"
+        
     def edit_question_title(self, question):
         "Method to edit a questions title"
         parser_edit_title.parse_args()
