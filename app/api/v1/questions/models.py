@@ -2,6 +2,8 @@ import datetime
 from flask import jsonify, make_response, request
 from flask_restful import Resource
 
+from app.api.validator import parser,parser_edit_question,parser_edit_title
+
 questions = []
 
 
@@ -10,14 +12,15 @@ class QuestionModel():
 
     def __init__(self):
         self.db = questions
-        if len(questions) == 0:
+        if len(self.db)  == 0:
             self.id = 1
-        else:
-            self.id = questions[-1]['id'] + 1
-        self.id = len(questions) + 1
+        else: 
+            self.id = len(self.db)+1
+
+        
 
     def save(self):
-        
+        parser.parse_args()        
         data = {
             'id': self.id,
             'title': request.json.get('title'),
@@ -38,6 +41,22 @@ class QuestionModel():
 
         return "question does not exist"
 
-    def delete(self, incident):
-        self.db.remove(incident)
+    def delete(self, question):
+        self.db.remove(question)
         return "deleted"
+
+    def edit_question(self, question):
+        "Method to edit a question"
+        question['question'] = request.json.get('question')
+        return "updated"
+        
+    def edit_question_title(self, question):
+        "Method to edit a questions title"
+        parser_edit_title.parse_args()
+        question['title'] = request.json.get('title')
+        return "updated"
+    def edit_quest(self, question):
+        "Method to edit a question"
+        parser_edit_question.parse_args()
+        question['question'] = request.json.get('question')
+        return "updated"
